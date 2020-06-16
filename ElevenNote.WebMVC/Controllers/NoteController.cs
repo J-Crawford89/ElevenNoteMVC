@@ -80,7 +80,7 @@ namespace ElevenNote.WebMVC.Controllers
         {
             var noteService = CreateNoteService();
             noteService.DeleteNote(id);
-            TempData["SaveResult"] = "Your note was deleted";
+            TempData["SaveResult"] = "Your note was deleted.";
             return RedirectToAction("Index");
         }
 
