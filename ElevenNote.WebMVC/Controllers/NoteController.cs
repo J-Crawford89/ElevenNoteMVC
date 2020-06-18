@@ -1,4 +1,5 @@
 ﻿using ElevenNote.Data;
+using ElevenNote.Models.CategoryModels;
 using ElevenNote.Models.NoteModels;
 using ElevenNote.Services;
 using Microsoft.AspNet.Identity;
@@ -14,6 +15,7 @@ namespace ElevenNote.WebMVC.Controllers
     [Authorize]
     public class NoteController : Controller
     {
+        private readonly ApplicationDbContext _ctx = new ApplicationDbContext();
         private NoteService CreateNoteService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
@@ -32,7 +34,19 @@ namespace ElevenNote.WebMVC.Controllers
         // GET: Note/Create
         public ActionResult Create()
         {
-            return View();
+            var categoryList = _ctx.Categories.ToList();
+            var dropdownList = new SelectList(categoryList.Select(item => new SelectListItem
+            {
+                Value = item.CategoryId.ToString(),
+                Text = item.Name
+            }).ToList(), "Value", "Text");
+
+            var model = new NoteCreate()
+            {
+                CategoryList = dropdownList
+            };
+
+            return View(model);
         }
 
         // POST: Note/Create
@@ -80,20 +94,29 @@ namespace ElevenNote.WebMVC.Controllers
         {
             var noteService = CreateNoteService();
             noteService.DeleteNote(id);
-            TempData["SaveResult"] = "Your note was deleted";
+            TempData["SaveResult"] = "Your note was deleted.";
             return RedirectToAction("Index");
         }
 
         // GET: Note/Edit/{id}
         public ActionResult Edit (int id)
         {
+            var categoryList = _ctx.Categories.ToList();
+            var dropdownList = new SelectList(categoryList.Select(item => new SelectListItem
+            {
+                Value = item.CategoryId.ToString(),
+                Text = item.Name
+            }).ToList(), "Value", "Text");
+            
             var noteService = CreateNoteService();
             var detail = noteService.GetNoteById(id);
             var model = new NoteEdit
             {
                 NoteId = detail.NoteId,
                 Title = detail.Title,
-                Content = detail.Content
+                Content = detail.Content,
+                CategoryId = detail.CategoryId,
+                CategoryList = dropdownList
             };
             return View(model);
         }

@@ -54,13 +54,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Note.cs" />
     <Compile Include="IdentityModels.cs" />
+    <Compile Include="Migrations\202006161737136_InitialCreate.cs" />
+    <Compile Include="Migrations\202006161737136_InitialCreate.Designer.cs">
+      <DependentUpon>202006161737136_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006161931330_added category.cs" />
+    <Compile Include="Migrations\202006161931330_added category.Designer.cs">
+      <DependentUpon>202006161931330_added category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202006161737136_InitialCreate.resx">
+      <DependentUpon>202006161737136_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006161931330_added category.resx">
+      <DependentUpon>202006161931330_added category.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
