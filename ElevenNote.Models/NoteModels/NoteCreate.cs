@@ -1,9 +1,11 @@
-﻿using System;
+﻿using ElevenNote.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace ElevenNote.Models.NoteModels
 {
@@ -15,5 +17,9 @@ namespace ElevenNote.Models.NoteModels
         public string Title { get; set; }
         [MaxLength(800, ErrorMessage ="There are too many characters in this field.")]
         public string Content { get; set; }
+        [Required]
+        [Display(Name ="Category")]
+        public int CategoryId { get; set; }
+        public IEnumerable<SelectListItem> CategoryList { get; set; }
     }
 }

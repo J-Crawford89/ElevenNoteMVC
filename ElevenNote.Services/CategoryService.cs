@@ -12,7 +12,7 @@ namespace ElevenNote.Services
     public class CategoryService
     {
         private readonly Guid _userId;
-        private ApplicationDbContext _ctx = new ApplicationDbContext();
+        private readonly ApplicationDbContext _ctx = new ApplicationDbContext();
 
         public CategoryService(Guid userId)
         {

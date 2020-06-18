@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace ElevenNote.Services
 {
@@ -13,7 +14,7 @@ namespace ElevenNote.Services
     {
         private readonly Guid _userId;
 
-        private ApplicationDbContext _ctx = new ApplicationDbContext();
+        private readonly ApplicationDbContext _ctx = new ApplicationDbContext();
 
         public NoteService(Guid userId)
         {
@@ -27,7 +28,8 @@ namespace ElevenNote.Services
                 OwnerId = _userId,
                 Title = model.Title,
                 Content = model.Content,
-                CreatedUtc = DateTimeOffset.Now
+                CreatedUtc = DateTimeOffset.Now,
+                CategoryId = model.CategoryId
             };
             _ctx.Notes.Add(entity);
 
@@ -42,6 +44,7 @@ namespace ElevenNote.Services
                 {
                     NoteId = e.NoteId,
                     Title = e.Title,
+                    CategoryName = e.Category.Name,
                     CreatedUtc = e.CreatedUtc
                 }).ToArray();
             return noteArray;
@@ -55,6 +58,8 @@ namespace ElevenNote.Services
                 NoteId = entity.NoteId,
                 Title = entity.Title,
                 Content = entity.Content,
+                CategoryName = entity.Category.Name,
+                CategoryId = entity.CategoryId,
                 CreatedUtc = entity.CreatedUtc,
                 ModifiedUtc = entity.ModifiedUtc
             };
@@ -66,6 +71,7 @@ namespace ElevenNote.Services
 
             entity.Title = model.Title;
             entity.Content = model.Content;
+            entity.CategoryId = model.CategoryId;
             entity.ModifiedUtc = DateTimeOffset.Now;
 
             return _ctx.SaveChanges() == 1;
