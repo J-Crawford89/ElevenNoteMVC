@@ -16,5 +16,6 @@ namespace ElevenNote.Models.NoteModels
         [Display(Name ="Category")]
         public int CategoryId { get; set; }
         public IEnumerable<SelectListItem> CategoryList { get; set; }
+        public bool IsStarred { get; set; }
     }
 }
